@@ -10,13 +10,16 @@ app.use(bodyParser())
 
 app.use(async ctx => {
   const { originalUrl } = ctx
-  const { method, url, params } = ctx.request.body
 
   switch (originalUrl) {
     case '/sendRequest':
-      await axios[method](url, params).then(res => {
-        ctx.body = res.data
-      })
+      await axios(ctx.request.body)
+        .then(res => {
+          ctx.body = res.data
+        })
+        .catch(err => {
+          ctx.body = err
+        })
       break
 
     default:
