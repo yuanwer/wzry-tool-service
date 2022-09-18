@@ -15,10 +15,16 @@ app.use(async ctx => {
     case '/sendRequest':
       await axios(ctx.request.body)
         .then(res => {
-          ctx.body = res.data
+          ctx.body = {
+            code: 200,
+            data: res.data
+          }
         })
         .catch(err => {
-          ctx.body = err
+          ctx.body = {
+            code: 500,
+            errMsg: err
+          }
         })
       break
 
